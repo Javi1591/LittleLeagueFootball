@@ -17,3 +17,16 @@ followed by Azure deployment.
 | 14 | Logging | Log structured events for Create/Edit/Delete; add request logging + correlation ID | Produce actionable logs for key ops | - [ ] Info logs include entity id/name <br>- [ ] Errors logged with exception <br>- [ ] Correlation ID appears | Log config; README write-up; screenshots of logs during CRUD | Perform create→edit→delete; verify logs and correlation ID; unit test logger via mock |
 | 15 | Stored Procedures | Add SP: GetPlayersByTeam @TeamID | Demonstrate interop with a stored procedure | - [ ] `.sql` file added <br>- [ ] EF call works <br>- [ ] UI path triggers SP <br>- [ ] Fallback LINQ documented | SP script + service call; README write-up; screenshots of UI result | Compare SP output vs LINQ; run in DB and app; verify match |
 | 16 | Deployment | Deploy to Azure (Linux, .NET 8) with staging/production slots; configure connection string and `/healthz` | Make the app publicly reachable | - [ ] App Service created <br>- [ ] App builds/runs <br>- [ ] `/healthz` reachable <br>- [ ] One functional path works | Deployed URL; README write-up; screenshots of portal, `/healthz`, and working page | Visit public URL; confirm health endpoint; load Teams & a roster page |
+
+## Week 10 Modeling
+This week, I implemented the foundation of my Little League Football application by creating the data model and connecting it to a database
+using Entity Framework Core. The two main entities I added were `Team` and `Player`, with the relationships between entities. A team can have
+many players, so I used an ICollection<Player> navigation property in the `Team` model to establish a one-to-many relationship. Whereas, a
+player can only have one relationship to a single team. Next, I created the `LeagueContext` class, which inherits from DbContext and defines
+two DbSet properties, one for `Teams` and `Players`. This context manages communication between the models and the database. I then configured
+the database connection string in `appsettings.json` and registered the context in Program.cs for dependency injection. To verify that the data
+model worked, I added initial seed data for four teams (Buccaneers, Falcons, Panthers, Saints) and ten players per team. I ran the commands
+`dotnet ef migrations add InitialCreate` and `dotnet ef database update` to generate the schema and seed the data automatically. Then,
+I created simple pages for /Teams and /Players to confirm that data loaded correctly. Finally, after running the migration, I tested the application
+by navigating to the /Teams and /Players pages. Each page loaded all the seeded data correctly, which confirmed that the database connection and
+model relationships were working as expected.
