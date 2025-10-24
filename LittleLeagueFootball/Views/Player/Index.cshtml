@@ -1,0 +1,21 @@
+﻿@model IEnumerable<LittleLeagueFootball.Models.Player>
+
+@{
+    ViewData["Title"] = "Players";
+}
+
+<!-- View Page -->
+<h2>Players</h2>
+
+<!-- Display Simple List -->
+<!-- Tables to Come in later weeks -->
+
+<!-- Use foreach loop -->
+@foreach (var player in Model)
+{
+    <!-- Display First Name then Last Name -->
+    <!-- Followed by Team Name, if applicable -->
+    <p>
+        @player.FirstName @player.LastName - @player.Team?.Name
+    </p>
+}

@@ -1,3 +1,6 @@
+using LittleLeagueFootball.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace LittleLeagueFootball
 {
     public class Program
@@ -9,6 +12,9 @@ namespace LittleLeagueFootball
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // Configure Entity Framework and SQL Server
+            builder.Services.AddDbContext<LeagueContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("LeagueContext")));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

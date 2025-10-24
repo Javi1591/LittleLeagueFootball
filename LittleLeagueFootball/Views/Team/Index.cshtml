@@ -1,0 +1,18 @@
+﻿@model IEnumerable<LittleLeagueFootball.Models.Team>
+
+@{
+    ViewData["Title"] = "Teams";
+}
+
+<!-- View Page -->
+<h2>Little League's Football Teams</h2>
+
+<!-- Display Simple List -->
+<!-- Tables to Come in later weeks -->
+
+<!-- Use foreach loop -->
+@foreach (var team in Model)
+{
+    <!-- Team ID is bold, Name is NOT -->
+    <p><strong>@team.Id:</strong> @team.Name</p>
+}
