@@ -30,3 +30,14 @@ model worked, I added initial seed data for four teams (Buccaneers, Falcons, Pan
 I created simple pages for /Teams and /Players to confirm that data loaded correctly. Finally, after running the migration, I tested the application
 by navigating to the /Teams and /Players pages. Each page loaded all the seeded data correctly, which confirmed that the database connection and
 model relationships were working as expected.
+
+## Week 11 Separation of Concerns and Dependency Injection
+This week, I worked on adding Separation of Concerns and Dependency Injection for my Little League Football project. The main goal was to take any logic
+out of the controllers and move it into a separate service class so the controllers only handle routing and views. I started by creating an interface
+called `ILeagueService` and then a class called `LeagueService` that contains all of the logic for getting teams, rosters, and players. I registered the
+service inside Program.cs using a Scoped lifetime so that every request has its own instance. Next, I updated both the `TeamController` and `PlayerController`
+to use constructor injection so they could get the service through the DI container instead of manually creating it. This made both controllers much cleaner
+and easier to follow. All of the logic for ordering players and retrieving rosters now happens inside `LeagueService`, which helps keep the code organized
+and separated into its own layers. Once that was set up, I tested everything by running the app and checking `/Team`, `/Team/Roster/{id}`, and `/Player`.
+The rosters loaded correctly, showing each player under the right team and sorted by last and first name. This confirmed that Dependency Injection was
+working as expected and that the application now follows proper MVC separation.
