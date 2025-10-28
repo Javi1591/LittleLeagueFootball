@@ -41,3 +41,7 @@ and easier to follow. All of the logic for ordering players and retrieving roste
 and separated into its own layers. Once that was set up, I tested everything by running the app and checking `/Team`, `/Team/Roster/{id}`, and `/Player`.
 The rosters loaded correctly, showing each player under the right team and sorted by last and first name. This confirmed that Dependency Injection was
 working as expected and that the application now follows proper MVC separation.
+
+
+
+Team and Player Names were sourced from NFL.com
