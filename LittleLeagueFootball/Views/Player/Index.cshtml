@@ -4,18 +4,44 @@
     ViewData["Title"] = "Players";
 }
 
-<!-- View Page -->
-<h2>Players</h2>
+<!-- View Players Page -->
+<h2>Little League's Football Players</h2>
 
 <!-- Display Simple List -->
 <!-- Tables to Come in later weeks -->
 
-<!-- Use foreach loop -->
-@foreach (var player in Model)
+<!-- Verify Players exist -->
+<!-- if/else statement, Model as variable -->
+@if (Model == null || !Model.Any())
 {
-    <!-- Display First Name then Last Name -->
-    <!-- Followed by Team Name, if applicable -->
-    <p>
-        @player.FirstName @player.LastName - @player.Team?.Name
-    </p>
+    <p>There are no players currently. Please come back at a later date after registrations have ended. Thank you!</p>
 }
+else
+{
+    <!-- If player FOUND -->
+    <!-- foreach loop, order by Player LastName then FirstName, SHOW Team if applicable -->
+    @foreach (var player in Model)
+    {
+        <!-- Display Name THEN - Team Name -->
+        <p>@player.LastName, @player.FirstName -
+
+            <!-- if/else statement if NO team assigned -->
+            <!-- Label as Not Drafted Yet -->
+            @if (player.Team != null)
+            {
+                @player.Team.Name
+            }
+            else
+            {
+                <span>Not Drafted Yet</span>
+            }
+
+        </p>
+    }
+}
+
+<!-- Links TO Team and Player Pages -->
+<p>
+    <a asp-controller="Team" asp-action="Index">Teams</a> -
+    <a asp-controller="Player" asp-action="Index">Players</a>
+</p>

@@ -1,4 +1,5 @@
 using LittleLeagueFootball.Data;
+using LittleLeagueFootball.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace LittleLeagueFootball
@@ -15,6 +16,11 @@ namespace LittleLeagueFootball
             // Configure Entity Framework and SQL Server
             builder.Services.AddDbContext<LeagueContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("LeagueContext")));
+
+            // Register ILeagueService and LeagueService for Dependency Injection
+            //  Scoped lifetime
+            builder.Services.AddScoped<ILeagueService, LeagueService>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

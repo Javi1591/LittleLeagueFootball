@@ -2,6 +2,7 @@
 using LittleLeagueFootball.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using LittleLeagueFootball.Services;
 
 namespace LittleLeagueFootball.Controllers
 {
@@ -10,25 +11,35 @@ namespace LittleLeagueFootball.Controllers
     {
         // Step 1: Database context for LeagueContext
         //  Make private readonly field
-        private readonly LittleLeagueFootball.Data.LeagueContext _context;
+        private readonly ILeagueService _leagueService;
 
         // Step 2: Constructor for Dependency Injection
-        //  Set up at later week
-        public TeamController(LittleLeagueFootball.Data.LeagueContext context)
+        public TeamController(ILeagueService leagueService)
         {
-            _context = context;
+            _leagueService = leagueService;
         }
 
-        // /GET: /Team
-        //  Return Seeded Teams
+        // Step 3 GET: /Team
+        //  Return Teams in db
         public async Task<IActionResult> Index()
         {
-            // Step 3: Retrieve Teams from database
             //  Use teams for variable
-            var teams = await _context.Teams.ToListAsync();
+            var teams = await _leagueService.GetTeamsAsync();
 
-            // Step 4: Return Teams to view
+            // return teams to View
             return View(teams);
+        }
+
+        // Step 4: Get Roster by Team
+        //  GET: /Team/Roster/{id}
+        //  Use roster for variable
+        public async Task<IActionResult> Roster(int id)
+        {
+            // var await roster
+            var roster = await _leagueService.GetRosterAsync(id);
+
+            // return roster to View
+            return View(roster);
         }
     }
 }

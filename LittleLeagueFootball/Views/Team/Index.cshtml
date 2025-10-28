@@ -4,15 +4,33 @@
     ViewData["Title"] = "Teams";
 }
 
-<!-- View Page -->
+<!-- View Teams Page -->
 <h2>Little League's Football Teams</h2>
 
 <!-- Display Simple List -->
 <!-- Tables to Come in later weeks -->
 
-<!-- Use foreach loop -->
-@foreach (var team in Model)
+<!-- Verify if any teams -->
+<!-- if/else statement, Keep Model as variable -->
+@if (Model == null || !Model.Any())
 {
-    <!-- Team ID is bold, Name is NOT -->
-    <p><strong>@team.Id:</strong> @team.Name</p>
+    <p>We apologize for any misunderstanding. Teams are still being organized and/or created. Please check back later. Thank you!</p>
 }
+else
+{
+    <!-- If team (variable) EXIST -->
+    <!-- Use foreach loop -->
+    @foreach (var team in Model)
+    {
+        <!-- Link TO Team's Roster -->
+        <p>
+            @team.Name - <a asp-controller="Team" asp-action="Roster" asp-route-id="@team.Id">Roster</a>
+        </p>
+    }
+}
+
+<!-- Links TO Home and Players Pages -->
+<p>
+    <a asp-controller="Home" asp-action="Index">Home</a> - 
+    <a asp-controller="Player" asp-action="Index">Players</a>
+</p>

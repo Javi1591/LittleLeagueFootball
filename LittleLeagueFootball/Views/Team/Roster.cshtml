@@ -1,0 +1,31 @@
+﻿@model IEnumerable<LittleLeagueFootball.Models.Player>
+
+@{
+    ViewData["Title"] = "Roster";
+}
+
+<!-- View Roster Page -->
+<h2>Roster</h2>
+
+<!-- Verify if team has a roster -->
+<!-- if/else statement, Model as variable -->
+@if (Model == null || !Model.Any())
+{
+    <p>This team has yet to draft any players. Please come back at a later date. Thank you!</p>
+}
+else
+{
+    <!-- If team HAS roster -->
+    <!-- foreach loop, order by Player LastName then FirstName -->
+    @foreach (var player in Model)
+    {
+        <!-- Display Name -->
+        <p>@player.LastName, @player.FirstName</p>
+    }
+}
+
+<!-- Links TO Team and Player Pages -->
+<p>
+    <a asp-controller="Team" asp-action="Index">Teams</a> - 
+    <a asp-controller="Player" asp-action="Index">Players</a>
+</p>
