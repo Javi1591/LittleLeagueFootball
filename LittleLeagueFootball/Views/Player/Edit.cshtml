@@ -1,0 +1,50 @@
+﻿@model LittleLeagueFootball.Models.Player
+
+@{
+    ViewData["Title"] = "Edit Player";
+}
+
+<!-- Edit Player Page -->
+<h2>Edit Player</h2>
+
+<!-- Player Edit Form -->
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- Hide ID -->
+    <input asp-for="Id" type="hidden" />
+
+    <!-- Summary -->
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <!-- Validate ALL Input -->
+    <!-- Prompt for FirstName, IF changed -->
+    <div>
+        <label asp-for="FirstName">First Name: </label>
+        <input asp-for="FirstName" />
+        <span asp-validation-for="FirstName"></span>
+    </div>
+
+    <!-- Prompt for LastName, IF changed -->
+    <div>
+        <label asp-for="LastName">Last Name:</label>
+        <input asp-for="LastName" />
+        <span asp-validation-for="LastName"></span>
+    </div>
+
+    <!-- Assign to Team, if applicable -->
+    <!-- Use Team dropdown ViewBag.TeamId -->
+    <div>
+        <label asp-for="TeamId">Team:</label>
+        <select asp-for="TeamId" asp-items="ViewBag.TeamId">
+            <option value="">*Assigned Team*</option>
+        </select>
+        <span asp-validation-for="TeamId"></span>
+    </div>
+
+    <div>
+        <!-- Action Buttons -->
+        <button type="submit">Save Changes</button>
+        <a asp-action="Index">Cancel</a>
+    </div>
+</form>

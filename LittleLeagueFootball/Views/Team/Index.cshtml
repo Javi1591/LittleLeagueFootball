@@ -25,12 +25,16 @@ else
         <!-- Link TO Team's Roster -->
         <p>
             @team.Name - <a asp-controller="Team" asp-action="Roster" asp-route-id="@team.Id">Roster</a>
+            - <a asp-controller="Team" asp-action="Edit" asp-route-id="@team.Id">Edit</a>
+            - <a asp-controller="Team" asp-action="Delete" asp-route-id="@team.Id">Delete</a>
+            - <a asp-action="RosterPrint" asp-route-id="@team.Id" target="_blank">Print Roster</a>
         </p>
     }
 }
 
-<!-- Links TO Home and Players Pages -->
+<!-- Navigation / Action Links -->
 <p>
+    <a asp-controller="Team" asp-action="Create">Create New Team</a> -
     <a asp-controller="Home" asp-action="Index">Home</a> - 
     <a asp-controller="Player" asp-action="Index">Players</a>
 </p>

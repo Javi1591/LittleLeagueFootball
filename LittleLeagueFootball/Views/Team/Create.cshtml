@@ -1,0 +1,26 @@
+﻿@model LittleLeagueFootball.Models.Team
+@{
+    ViewData["Title"] = "Create New Team";
+}
+
+<h2>Create New Team</h2>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- Validation -->
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <!-- Team -->
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    <p>
+        <!-- Action Buttons -->
+        <button type="submit">Save</button>
+        <a asp-action="Index">Cancel</a>
+    </p>
+</form>

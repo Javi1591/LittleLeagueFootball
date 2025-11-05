@@ -1,0 +1,43 @@
+﻿@model LittleLeagueFootball.Models.Player
+
+@{
+    ViewData["Title"] = "Delete Player";
+}
+
+<!-- Delete Player Page -->
+<h2>Delete Player</h2>
+
+<!-- Confirm Deletion Form -->
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- Hide ID -->
+    <input asp-for="Id" type="hidden" />
+
+    <div>
+
+        <!-- Prompt for Confirmation -->
+        <h3>Are you sure you want to delete the following player?</h3>
+
+        <p>
+            <strong>Name:</strong> @Model.FirstName @Model.LastName<br />
+            <strong>Team:</strong>
+
+            <!-- Use if/else statement, if player NOT on team -->
+            @if (Model.Team != null)
+            {
+                @Model.Team.Name
+            }
+            else
+            {
+                <span>Not Drafted Yet</span>
+            }
+        </p>
+    </div>
+
+    <div>
+        <!-- Action Buttons -->
+        <button type="submit">Confirm Delete</button>
+        <a asp-action="Index">Cancel</a>
+    </div>
+</form>

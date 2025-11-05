@@ -20,6 +20,7 @@ else
 {
     <!-- If player FOUND -->
     <!-- foreach loop, order by Player LastName then FirstName, SHOW Team if applicable -->
+    <!-- Edit / Delete Action Buttons AFTER if/else-->
     @foreach (var player in Model)
     {
         <!-- Display Name THEN - Team Name -->
@@ -36,12 +37,17 @@ else
                 <span>Not Drafted Yet</span>
             }
 
+            <!-- Edit / Delete -->
+            - <a asp-controller="Player" asp-action="Edit" asp-route-id="@player.Id">Edit</a>
+            - <a asp-controller="Player" asp-action="Delete" asp-route-id="@player.Id">Delete</a>
+
         </p>
     }
 }
 
-<!-- Links TO Team and Player Pages -->
+<!-- Navigation Links / Action Buttons -->
 <p>
+    <a asp-controller="Player" asp-action="Create">Add Player</a> - 
     <a asp-controller="Team" asp-action="Index">Teams</a> -
     <a asp-controller="Player" asp-action="Index">Players</a>
 </p>

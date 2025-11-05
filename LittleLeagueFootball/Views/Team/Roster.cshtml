@@ -1,15 +1,15 @@
-﻿@model IEnumerable<LittleLeagueFootball.Models.Player>
+﻿@model LittleLeagueFootball.Models.TeamPlayersViewModel
 
 @{
     ViewData["Title"] = "Roster";
 }
 
 <!-- View Roster Page -->
-<h2>Roster</h2>
+<h2>@Model.Team.Name Roster</h2>
 
 <!-- Verify if team has a roster -->
 <!-- if/else statement, Model as variable -->
-@if (Model == null || !Model.Any())
+@if (Model.Players == null || !Model.Players.Any())
 {
     <p>This team has yet to draft any players. Please come back at a later date. Thank you!</p>
 }
@@ -17,15 +17,16 @@ else
 {
     <!-- If team HAS roster -->
     <!-- foreach loop, order by Player LastName then FirstName -->
-    @foreach (var player in Model)
+    @foreach (var player in Model.Players)
     {
         <!-- Display Name -->
         <p>@player.LastName, @player.FirstName</p>
     }
 }
 
-<!-- Links TO Team and Player Pages -->
+<!-- Navigation Links / Actions -->
 <p>
+    <a asp-acton="RosterPrint" asp-route-id="@Model.Team.Id" target="_blank">Print Page</a> -  
     <a asp-controller="Team" asp-action="Index">Teams</a> - 
     <a asp-controller="Player" asp-action="Index">Players</a>
 </p>

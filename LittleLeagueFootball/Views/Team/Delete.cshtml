@@ -1,0 +1,22 @@
+﻿@model LittleLeagueFootball.Models.Team
+@{
+    ViewData["Title"] = "Team Delete";
+}
+
+<h2>Delete Team</h2>
+
+<!-- Prompt for deleting entry -->
+<p>Are you sure you want to delete the team: <strong>@Model.Name</strong>?</p>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- Hide ID -->
+    <input type="hidden" asp-for="Id" />
+
+    <p>
+        <!-- Action Buttons -->
+        <button type="submit">Delete</button>
+        <a asp-action="Index">Cancel</a>
+    </p>
+</form>

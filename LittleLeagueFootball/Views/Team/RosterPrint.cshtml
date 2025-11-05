@@ -1,0 +1,100 @@
+﻿@model LittleLeagueFootball.Models.TeamPlayersViewModel
+@{
+    Layout = null;
+}
+
+<!-- Printable Rosters -->
+<!DOCTYPE html>
+<html lang=" en">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>@Model.Team.Name Roster</title>
+
+        <style>
+
+        <!-- Step 1: Basic Styling for Print View -->
+
+            <!-- Holds default layout -->
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+
+            <!-- Holds header -->
+            h2 {
+                text-align: center;
+            }
+
+            <!-- Holds roster -->
+            .roster {
+                margin-top: 20px;
+            }
+
+            <!-- Holds each player entry -->
+            .player {
+                margin-bottom: 5px;
+            }
+
+            <!-- Print Button Control -->
+            .controls {
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            <!-- Style for buttons and links -->
+            button, a {
+                margin: 0 10px;
+                padding: 10px 20px;
+                font-size: 16px;
+                text-decoration: none;
+                color: white;
+                background-color: #007BFF;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            button:hover, a:hover {
+                background-color: #0056b3;
+            }
+
+            <!-- Print Settings -->
+            @@media print {
+                .controls { display: none; }    <!-- Hides Button -->
+                body { margin: 10mm; }
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <!-- Step 2: Display page -->
+        <h2>@Model.Team.Name Roster</h2>
+
+        <!-- Print Button -->
+        <div class="controls">
+            <button onclick="window.print()">Print</button>
+        </div>
+
+        <!-- if/else statement to validate team has players -->
+        <!-- Nest foreach loop if team has roster -->
+        <div class="roster">
+
+            @if (Model.Players == null || !Model.Players.Any())
+            {
+                <p>This team has yet to draft any players. Please come back at a later date. Thank you!</p>
+            }
+
+            else
+            {
+                <!-- foreach loop -->
+                @foreach (var player in Model.Players)
+                {
+                    <div class="player">@player.LastName, @player.FirstName</div>
+                }
+            }
+        </div>
+    </body>
+</html>

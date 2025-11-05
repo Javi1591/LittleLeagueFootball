@@ -1,0 +1,47 @@
+﻿@model LittleLeagueFootball.Models.Player
+
+@{
+    ViewData["Title"] = "Add New Player";
+}
+
+<!-- Create New Player Page -->
+<h2>Add a New Player</h2>
+
+<!-- Player Creation Form -->
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <!-- Summary -->
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <!-- Validate ALL Input -->
+    <!-- Prompt for FirstName -->
+    <div>
+        <label asp-for="FirstName">First Name: </label>
+        <input asp-for="FirstName" />
+        <span asp-validation-for="FirstName"></span>
+    </div>
+
+    <!-- Prompt for LastName -->
+    <div>
+        <label asp-for="LastName">Last Name:</label>
+        <input asp-for="LastName" />
+        <span asp-validation-for="LastName"></span>
+    </div>
+
+    <!-- Assign to Team, if applicable -->
+    <!-- Use Team dropdown ViewBag.TeamId -->
+    <div>
+        <label asp-for="TeamId">Team:</label>
+        <select asp-for="TeamId" asp-items="ViewBag.TeamId">
+            <option value="">*Assigned Team*</option>
+        </select>
+        <span asp-validation-for="TeamId"></span>
+    </div>
+
+    <div>
+        <!-- Action Buttons -->
+        <button type="submit">Submit</button>
+        <a asp-action="Index">Cancel</a>
+    </div>
+</form>
