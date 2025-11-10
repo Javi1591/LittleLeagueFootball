@@ -18,7 +18,7 @@ namespace LittleLeagueFootball
 
             // Configure Entity Framework and SQL Server
             builder.Services.AddDbContext<LeagueContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("LeagueContex")));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("LeagueContext")));
 
             // Register Healthz Check
             builder.Services.AddHealthChecks()
