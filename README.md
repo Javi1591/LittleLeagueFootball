@@ -60,4 +60,7 @@ between `Healthy` and `Unhealthy` while providing just enough detail for trouble
 ## References Used:
 Team and Player Names were sourced from NFL.com | 
 https://www.w3schools.com/html/ | 
-https://www.geeksforgeeks.org/css/how-to-create-printer-friendly-pages-with-css/
+https://www.geeksforgeeks.org/css/how-to-create-printer-friendly-pages-with-css/ |
+Microsoft Learn. Health checks in ASP.NET Core. [https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-9.0](https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-9.0) |
+Microsoft Docs. Microsoft.Extensions.Diagnostics.HealthChecks Namespace. [https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.diagnostics.healthchecks](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.diagnostics.healthchecks) |
+
