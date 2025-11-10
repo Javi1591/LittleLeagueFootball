@@ -42,6 +42,17 @@ and separated into its own layers. Once that was set up, I tested everything by 
 The rosters loaded correctly, showing each player under the right team and sorted by last and first name. This confirmed that Dependency Injection was
 working as expected and that the application now follows proper MVC separation.
 
+## Week 12
+This week, I focused on adding Create, Edit, and Delete (CRUD) features for both Teams and Players, as well as implementing Roster and Printable Roster views
+for each team. This built upon the keeping controllers thin and maintaining all database logic within the LeagueService. I used asynchronous methods throughout
+the service layer for smoother data access. Each POST action follows the PRG (Post-Redirect-Get) pattern to prevent duplicate form submissions. The Create and
+Edit views now include model validation feedback with required attributes in the models and validation in the Razor pages to display helpful messages if data is
+missing. Another addon this week was the `Roster` and `RosterPrint` pages. Each team can now display a full list of its players, ordered by last name and first name.
+The `RosterPrint` page includes printer-friendly CSS and a “Print” button that hides on print view, providing a clean, exportable roster. Teams and Players can be
+fully managed from the UI, validation feedback works correctly, and the Roster pages show only related data.
 
 
-Team and Player Names were sourced from NFL.com
+## References Used:
+Team and Player Names were sourced from NFL.com | 
+https://www.w3schools.com/html/ | 
+https://www.geeksforgeeks.org/css/how-to-create-printer-friendly-pages-with-css/
