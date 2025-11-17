@@ -51,8 +51,16 @@ missing. Another addon this week was the `Roster` and `RosterPrint` pages. Each 
 The `RosterPrint` page includes printer-friendly CSS and a “Print” button that hides on print view, providing a clean, exportable roster. Teams and Players can be
 fully managed from the UI, validation feedback works correctly, and the Roster pages show only related data.
 
+## Week 13
+This week focused on implementing diagnostics through ASP.NET Core Health Checks. I registered the health check service and configured a real database dependency
+named "Database" to verify that the EF Core connection is active. The `/healthz` endpoint outputs a clean JSON summary showing overall status and dependency state
+without revealing sensitive details. Testing the feature with both a working and intentionally broken connection confirmed that the endpoint correctly switches
+between `Healthy` and `Unhealthy` while providing just enough detail for troubleshooting.
 
 ## References Used:
 Team and Player Names were sourced from NFL.com | 
 https://www.w3schools.com/html/ | 
-https://www.geeksforgeeks.org/css/how-to-create-printer-friendly-pages-with-css/
+https://www.geeksforgeeks.org/css/how-to-create-printer-friendly-pages-with-css/ |
+Microsoft Learn. Health checks in ASP.NET Core. [https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-9.0](https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-9.0) |
+Microsoft Docs. Microsoft.Extensions.Diagnostics.HealthChecks Namespace. [https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.diagnostics.healthchecks](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.diagnostics.healthchecks) |
+
