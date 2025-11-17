@@ -6,6 +6,7 @@ using LittleLeagueFootball.Services;
 using LittleLeagueFootball.Models;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 
 namespace LittleLeagueFootball.Controllers
 {
@@ -15,10 +16,15 @@ namespace LittleLeagueFootball.Controllers
         //  Make private readonly field
         private readonly ILeagueService _leagueService;
 
+        // Step 1a: Logger for PlayerController
+        //  Make private readonly field
+        private readonly ILogger<PlayerController> _logger;
+
         // Step 2: Constructor for Dependency Injection
-        public PlayerController(ILeagueService leagueService)
+        public PlayerController(ILeagueService leagueService, ILogger<PlayerController> logger)
         {
             _leagueService = leagueService;
+            _logger = logger;               // Initialize logger
         }
 
         // Step 3 Get: /Player
@@ -62,9 +68,25 @@ namespace LittleLeagueFootball.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("FirstName, LastName, TeamId")] Player player)
         {
+            // GET: RequestId for logging
+            //  Use var requestId
+            //  Get from HttpContext TraceIdentifier
+            var requestId = HttpContext.TraceIdentifier;
+
             // Use if statement to check ModelState
             if (!ModelState.IsValid)
             {
+                // Log warning with requestId
+                //  Use requestId, PlayerFirstName, PlayerLastName, PlayerTeamId
+                _logger.LogWarning(
+                    "Create Player failed validation. RequestId: {RequestId}, " +
+                    "PlayerFirstName: {PlayerFirstName}, PlayerLastName: {PlayerLastName}, " +
+                    "PlayerTeamId: {PlayerTeamId}",
+                    requestId,
+                    player.FirstName,
+                    player.LastName,
+                    player.TeamId);
+
                 // await PopulateTeamsAsync with player.TeamId
                 await PopulateTeamsAsync(player.TeamId);
 
@@ -74,6 +96,20 @@ namespace LittleLeagueFootball.Controllers
 
             // await _leagueService to add player
             await _leagueService.AddPlayerAsync(player);
+
+            // Log information for successful creation
+            //  Use requestId, PlayerId, PlayerFirstName, PlayerLastName, PlayerTeamId
+            //  Label as PlayerCreated
+            _logger.LogInformation(
+                "Player created successfully. RequestId: {RequestId}, Action: {Action} " +
+                "PlayerId: {PlayerId}, PlayerFirstName: {PlayerFirstName}, " +
+                "PlayerLastName: {PlayerLastName}, PlayerTeamId: {PlayerTeamId}",
+                requestId,
+                player.Id,
+                player.FirstName,
+                player.LastName,
+                player.TeamId,
+                "PlayerCreated");
 
             // return to Index
             return RedirectToAction(nameof(Index));

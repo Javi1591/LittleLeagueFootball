@@ -82,7 +82,7 @@ namespace LittleLeagueFootball
                 };
 
                 // Convert health report to FORMATTED JSON string
-                // Use JsonSerializer with indented option
+                //  Use JsonSerializer with indented option
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 string json = JsonSerializer.Serialize(body, options);
 

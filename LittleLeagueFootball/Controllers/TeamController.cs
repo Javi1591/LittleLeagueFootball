@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using LittleLeagueFootball.Services;
 using LittleLeagueFootball.Models;
+using Microsoft.Extensions.Logging;
 
 namespace LittleLeagueFootball.Controllers
 {
@@ -14,10 +15,15 @@ namespace LittleLeagueFootball.Controllers
         //  Make private readonly field
         private readonly ILeagueService _leagueService;
 
+        // Step 1a: Logger for TeamController
+        //  Make private readonly field
+        private readonly ILogger<TeamController> _logger;
+
         // Step 2: Constructor for Dependency Injection
-        public TeamController(ILeagueService leagueService)
+        public TeamController(ILeagueService leagueService, ILogger<TeamController> logger)
         {
             _leagueService = leagueService;
+            _logger = logger;               // Initialize logger
         }
 
         // Step 3 GET: /Team
@@ -134,17 +140,46 @@ namespace LittleLeagueFootball.Controllers
         //  Use team id for parameter, players for variable
         public async Task<IActionResult> Roster(int id)
         {
+            // GET: Request ID for logging
+            //  Use var requestId
+            //  Get from HttpContext TraceIdentifier
+            var requestId = HttpContext.TraceIdentifier;
+
             // var await team
             var team = await _leagueService.GetTeamsAsync(id);
 
             // Use if statement to check for no team found
             if (team == null)
             {
+                // Log warning for team not found
+                //  Use RequestId and TeamId
+                //  Log action as "Roster"
+                _logger.LogWarning(
+                    "Roster - Failed retrieval. Team with ID {TeamId} not found. " +
+                    "Request ID: {RequestId} Action: {Action}",
+                    id,
+                    requestId,
+                    "Roster");
+
+                // return NotFound
                 return NotFound();
             }
 
             // var await players
             var players = await _leagueService.GetPlayersByTeamAsync(id);
+
+            // Log for successful roster viewing
+            //  Use RequestId and TeamName, TeamId, PlayerCount
+            //  Log action as "Roster"
+            _logger.LogInformation(
+                "Roster - Successfully retrieved roster for Team '{TeamName}'" +
+                " (ID: {TeamId}) with {PlayerCount} players. " +
+                "Request ID: {RequestId}, Action: {Action}",
+                team.Name,
+                team.Id,
+                players.Count(),
+                requestId,
+                "Roster");
 
             // Create ViewModel to pass both team and players to View
             var viewModel = new TeamPlayersViewModel
@@ -161,6 +196,10 @@ namespace LittleLeagueFootball.Controllers
         //  Returns printable Roster by Team Id
         public async Task<IActionResult> RosterPrint(int id)
         {
+            // GET: Request ID for logging
+            //  Use var requestId
+            //  Get from HttpContext TraceIdentifier
+            var requestId = HttpContext.TraceIdentifier;
 
             // var await team
             var team = await _leagueService.GetTeamsAsync(id);
@@ -168,11 +207,35 @@ namespace LittleLeagueFootball.Controllers
             // Use if statement to check for no team found
             if (team == null)
             {
+                // Log warning for team not found
+                //  Use requestId and team id
+                //  Log action as "RosterPrint"
+                _logger.LogWarning(
+                    "RosterPrint: Failed retrieval. Team with ID {TeamId} not found. " +
+                    "Request ID: {RequestId}, Action: {Action}",
+                    id,
+                    requestId,
+                    "RosterPrint");
+
+                // return NotFound
                 return NotFound();
             }
 
             // var await players
             var players = await _leagueService.GetPlayersByTeamAsync(id);
+
+            // Log for successful printable roster viewing
+            //  Use requestId and team name, team id, player count
+            //  Log action as "RosterPrint"
+            _logger.LogInformation(
+                "RosterPrint: Successfully retrieved printable roster for Team '{TeamName}' " +
+                "(ID: {TeamId}) with {PlayerCount} players. " +
+                "Request ID: {RequestId}, Action: {Action}",
+                team.Name,
+                team.Id,
+                players.Count(),
+                requestId,
+                "RosterPrint");
 
             // Create ViewModel to pass both team and players to View
             var viewModel = new TeamPlayersViewModel
