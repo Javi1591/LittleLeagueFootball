@@ -57,10 +57,20 @@ named "Database" to verify that the EF Core connection is active. The `/healthz`
 without revealing sensitive details. Testing the feature with both a working and intentionally broken connection confirmed that the endpoint correctly switches
 between `Healthy` and `Unhealthy` while providing just enough detail for troubleshooting.
 
+## Week 14
+This week I focused on implementing the Logging feature for my LittleLeagueFootball application, and the main goal was to add structured logs that would be useful
+if something went wrong. I added logging to the `TeamController` and `PlayerController` using the built-in ILogger service, making sure to include both success and
+error paths. For the roster pages, it now logs when a team is successfully loaded, including the `TeamId`, `TeamName`, the number of players on the roster, and the
+request’s trace identifier, which makes the logs extremely helpful for tracking specific requests. If a team doesn’t exist, the app logs a warning with the same
+fields so it’s easy to find what failed. I also added logging in the Player Create POST action so that when a new player is added, the logs record the player's name,
+team, and ID, and when validation fails, the logs show the incorrect submission for debugging. This week really highlighted how structured logging is more than simple
+printouts as it provides real information that would matter in a real world system.
+
 ## References Used:
 Team and Player Names were sourced from NFL.com | 
 https://www.w3schools.com/html/ | 
 https://www.geeksforgeeks.org/css/how-to-create-printer-friendly-pages-with-css/ |
 Microsoft Learn. Health checks in ASP.NET Core. [https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-9.0](https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-9.0) |
 Microsoft Docs. Microsoft.Extensions.Diagnostics.HealthChecks Namespace. [https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.diagnostics.healthchecks](https://learn.microsoft.com/en-us/dotnet/api/microsoft.extensions.diagnostics.healthchecks) |
+Microsoft Learn. Logging in .NET. https://learn.microsoft.com/en-us/aspnet/core/fundamentals/logging 
 
