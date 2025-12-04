@@ -66,6 +66,18 @@ fields so it’s easy to find what failed. I also added logging in the Player Cr
 team, and ID, and when validation fails, the logs show the incorrect submission for debugging. This week really highlighted how structured logging is more than simple
 printouts as it provides real information that would matter in a real world system.
 
+## Week 15
+This week’s update focused on implementing the Stored Procedures requirement by creating a lightweight procedure that returns all players belonging to a selected team
+and wiring it into the application through EF Core. I added a SQL script to the project that drops and recreates `dbo.GetPlayersByTeam`, and then executed that script
+in the same LocalDB database used by the app so the procedure would be available at runtime. To map the result set, I created a keyless model `PlayerByTeamResult` and
+registered it in `LeagueContext` with `HasNoKey()` and `ToView(null`), allowing EF Core to read the stored procedure output without expecting a physical table. I then
+added a new service method called `GetPlayersByTeamStoredProcedureAsync` that safely executes the stored procedure using `FromSqlRaw` and a parameter object, keeping
+the call secure and easy to maintain. A new controller action, `RosterSp`, was added to call this method and pass the results to a dedicated Razor view that displays
+the team name and the sorted player list. A link was added to the Team Index page so the stored procedure version of the roster can be accessed separately from the
+LINQ-based version. Overall, this week introduced stored procedure integration into the existing MVC structure while keeping the scope simple and maintaining the same
+organization pattern used in previous weeks.
+
+
 ## References Used:
 Team and Player Names were sourced from NFL.com | 
 https://www.w3schools.com/html/ | 
