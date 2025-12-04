@@ -26,5 +26,8 @@ namespace LittleLeagueFootball.Services
         // Step 4: Helper Functions
         Task<Team?> GetTeamsAsync(int id);                          // GetTeamAsync by id
         Task<IReadOnlyList<Player>> GetPlayersByTeamAsync(int id);  // GetPlayerAsync by id
+
+        // Step 5: Stored Procedure to get Players by Team
+        Task<IReadOnlyList<PlayerByTeamResult>> GetPlayersByTeamStoredProcAsync(int teamId);
     }
 }

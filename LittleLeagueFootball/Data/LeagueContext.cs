@@ -19,6 +19,9 @@ namespace LittleLeagueFootball.Data
         public DbSet<Player> Players => Set<Player>(); // Table for Players
         public DbSet<Team> Teams => Set<Team>();  // Table for Teams
 
+        // Stored Procedure Mapping
+        public DbSet<PlayerByTeamResult> PlayerByTeamResults => Set<PlayerByTeamResult>();
+
         // Step 4: Seed Data
         //  Use OnModelCreating (built-in function) to seed data for Players and Teams
         //  Reference NFL.com roster for players
@@ -91,6 +94,16 @@ namespace LittleLeagueFootball.Data
                 new Player { Id = 39, FirstName = "Dante", LastName = "Pettis", TeamId = 4 },
                 new Player { Id = 40, FirstName = "Ronnie", LastName = "Bell", TeamId = 4 }
             );
+
+            // PlayerByTeamResult keyless entity configuration
+            modelBuilder.Entity<PlayerByTeamResult>(entity =>
+            {
+                // Configure as keyless entity
+                entity.HasNoKey();
+
+                // Not mapped to a specific table
+                entity.ToView((string?)null);
+            });
         }
     }
 }

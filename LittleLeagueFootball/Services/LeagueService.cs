@@ -1,6 +1,7 @@
 ﻿using LittleLeagueFootball.Data;
 using LittleLeagueFootball.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
 
 namespace LittleLeagueFootball.Services
 {
@@ -8,7 +9,7 @@ namespace LittleLeagueFootball.Services
     public class LeagueService : ILeagueService
     {
         // Step 1: Inject LeagueContext _context
-        //  Make pricate readonly
+        //  Make private readonly
         private readonly LeagueContext _context;
 
         // Dependency Injection Constructor
@@ -204,6 +205,25 @@ namespace LittleLeagueFootball.Services
 
             // return players
             return players;
+        }
+
+        // Step 6: Stored Procedure to get Players by Team
+        public async Task<IReadOnlyList<PlayerByTeamResult>> GetPlayersByTeamStoredProcAsync(int teamId)
+        {
+            // Step 6A: Define parameter for stored procedure
+            //  Use SqlParameter for @TeamId, teamIdParam as name
+            var teamIdParam = new SqlParameter("@TeamId", teamId);
+
+            // Step 6B: Execute stored procedure and get results
+            //  var await for results in db
+            //  Use FromSqlRaw to call stored procedure
+            var results = await _context.PlayerByTeamResults
+                .FromSqlRaw("EXECUTE dbo.GetPlayersByTeam @TeamId", teamIdParam)
+                .AsNoTracking()
+                .ToListAsync();
+
+            // return results
+            return results;
         }
     }
 }

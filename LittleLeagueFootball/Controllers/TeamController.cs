@@ -192,6 +192,57 @@ namespace LittleLeagueFootball.Controllers
             return View(viewModel);
         }
 
+        // Step 7a GET: /Team/RosterSp/{id}
+
+        //  Returns Roster by Team Id using GetPlayersByTeam stored procedure.
+        public async Task<IActionResult> RosterSp(int id)
+        {
+            // GET: Request ID for logging
+            //  Use var requestId
+            //  Get from HttpContext TraceIdentifier
+            var requestId = HttpContext.TraceIdentifier;
+
+            // var await team (used for logging and display)
+            var team = await _leagueService.GetTeamsAsync(id);
+
+            // Use if statement to check for no team found
+            if (team == null)
+            {
+                // Log warning for team not found (stored procedure path)
+                //  Use RequestId and TeamId
+                //  Log action as "RosterSp"
+                _logger.LogWarning(
+                    "RosterSp - Failed retrieval (Stored Procedure). Team with ID {TeamId} not found. " +
+                    "Request ID: {RequestId}, Action: {Action}",
+                    id,
+                    requestId,
+                    "RosterSp");
+
+                // return NotFound
+                return NotFound();
+            }
+
+            // var await players using stored procedure
+            var players = await _leagueService.GetPlayersByTeamStoredProcAsync(id);
+
+            // Log for successful roster viewing using stored procedure
+            //  Use RequestId and TeamName, TeamId, PlayerCount
+            //  Log action as "RosterSp"
+            _logger.LogInformation(
+                "RosterSp - Successfully retrieved roster via stored procedure for Team '{TeamId}'" +
+                " (ID: {TeamId}) with {PlayerCount} players. " +
+                "Request ID: {RequestId}, Action: {Action}",
+                team.Name,
+                team.Id,
+                players.Count,
+                requestId,
+                "RosterSp");
+
+            // Pass result list directly to View
+            //  View will use PlayerByTeamResult to render players
+            return View(players);
+        }
+
         // Step 8 GET: /Team/RosterPrint/{id}
         //  Returns printable Roster by Team Id
         public async Task<IActionResult> RosterPrint(int id)

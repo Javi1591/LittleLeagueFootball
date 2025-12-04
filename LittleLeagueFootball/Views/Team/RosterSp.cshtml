@@ -1,0 +1,31 @@
+﻿@model IReadOnlyList<LittleLeagueFootball.Models.PlayerByTeamResult>
+
+    <!-- Team Roster (Stored Procedure) -->
+@{
+    ViewData["Title"] = "Team Roster (Stored Procedure)";
+    var teamName = Model.FirstOrDefault()?.TeamName ?? "Unknown Team";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p><strong>Team:</strong> @teamName</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Player</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var player in Model)
+        {
+            <tr>
+                <td>@player.LastName, @player.FirstName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Index" asp-controller="Team">Back to Teams</a>
+</p>

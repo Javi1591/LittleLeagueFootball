@@ -25,6 +25,7 @@ else
         <!-- Link TO Team's Roster -->
         <p>
             @team.Name - <a asp-controller="Team" asp-action="Roster" asp-route-id="@team.Id">Roster</a>
+            - <a asp-action="RosterSp" asp-route-id="@team.Id">Roster (SP)</a>
             - <a asp-controller="Team" asp-action="Edit" asp-route-id="@team.Id">Edit</a>
             - <a asp-controller="Team" asp-action="Delete" asp-route-id="@team.Id">Delete</a>
             - <a asp-action="RosterPrint" asp-route-id="@team.Id" target="_blank">Print Roster</a>
