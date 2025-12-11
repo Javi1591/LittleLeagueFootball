@@ -77,6 +77,16 @@ the team name and the sorted player list. A link was added to the Team Index pag
 LINQ-based version. Overall, this week introduced stored procedure integration into the existing MVC structure while keeping the scope simple and maintaining the same
 organization pattern used in previous weeks.
 
+## Week 16
+This week focused on fully deploying the LittleLeagueFootball application to Microsoft Azure by transitioning from a local development environment using LocalDB to a
+production ready Azure SQL Database and an Azure App Service. I started by creating a new logical SQL server and database using SQL authentication. After configuring
+firewall settings, I externalized the connection string with the .NET Secret Manager to keep all sensitive information out of the codebase and repository. With the
+ADO.NET connection string stored securely, I ran `dotnet ef database update` to apply all migrations directly against Azure SQL, confirming that the schema and seed
+data were created successfully. In the Azure App Service configuration, I added a connection string named `LeagueContext` and assigned it the same ADO.NET value,
+ensuring that the deployed application pointed to the correct production database. After deployment, I verified functionality by loading the Teams and Players pages
+and checking the `/healthz` endpoint, which confirmed database connectivity and overall application health. The main challenges included fixing a `appsettings.json`
+file and resolving expired publish credentials, but both were corrected through careful reconfiguration. Overall, this process reinforced secure secret handling, cloud
+database provisioning, EF Core migrations, and real-world deployment practices.
 
 ## References Used:
 Team and Player Names were sourced from NFL.com | 
